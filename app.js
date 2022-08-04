@@ -14,7 +14,30 @@ router.get("/getjobs", function (req, res) {});
 //addjob
 router.get(
   "/title/:title/salary/:salary/company/:company/description/:description",
-  (req, res) => {}
+  (req, res) => {
+    console.log("ADDING");
+    const fs = require("fs");
+
+    var newJob = {
+      title: req.params.title,
+      salary: req.params.salary,
+      company: req.params.company,
+      description: req.params.description,
+    };
+
+    let rawdata = fs.readFileSync("jobs.json");
+    let jobs = JSON.parse(rawdata);
+    jobs.list.push(newJob);
+
+    const jsonString = JSON.stringify(jobs, null, 2);
+    fs.writeFile("./jobs.json", jsonString, (err) => {
+      if (err) {
+        console.log("Error writing file", err);
+      } else {
+        console.log("Successfully wrote file");
+      }
+    });
+  }
 );
 
 //add the router
