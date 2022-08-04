@@ -52,11 +52,26 @@
         },
         methods: {
           getJobs: function(){
-            
+            fetch("getjobs/")
+            .then((res) => res.json())
+            .then((res) => {
+              this.listOfJobs = res.list;
+              console.log(this.listOfJobs);
+              form = false;
+            })
           },
 
           addJob: function(title, salary, company, description){
-            
+            fetch("title/"+ this.title + "/salary/" +this.salary+"/company/"+this.company+"/description/"+this.description)
+            .then((res) => res.json())
+            .then((res) => {
+              console.log("TRYING TO ADD JOB");
+
+            })
+            this.title = "";
+            this.salary = "";
+            this.company = "";
+            this.description = "";
           }
         }
       })
