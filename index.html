@@ -1,0 +1,65 @@
+<html>
+  <head>
+    <title>Job List</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    
+  </head>
+  <body>
+    <h1>Job Listing<h1>
+    <h6></h6>
+    <div class = "div1" id="app">
+      <button class="button button1" v-on:click="getJobs(); form = false" >Get jobs</button>
+      <button class="button button1" v-on:click="form = true">Add job</button><br>
+
+      <div class = "div2" v-if="form == false" v-for="data in listOfJobs">
+        <ul>
+            <li class="li1">Title: {{ data.title }} <br>
+                Salary: €{{data.salary}} <br>
+                Company: {{data.company}} <br>
+                Description: {{data.description}} <br>
+              </li>
+        </ul>
+      </div>
+      <br>
+      <h3 v-if="form">Add your job position here!</h3>
+      <label v-if="form" for="title">Title:</label> <br>
+      <input v-if="form" v-model="title" id="title" /> <br>
+      <br>
+      <label v-if="form" for="salary">Salary:</label> <br>
+      <input v-if="form" v-model="salary" id="salary" /> <br>
+      <br>
+      <label v-if="form" for="company">Company:</label> <br>
+      <input v-if="form" v-model="company" id="company" /> <br>
+      <br>
+      <label v-if="form" for="description">Description:</label> <br>
+      <input v-if="form" v-model="description" id="description" /> <br>
+      <br>
+      <button v-if="form" v-on:click="addJob(title, salary, company, description)">
+        Add
+      </button>
+    </div>
+    <script>
+      new Vue({
+        el:"#app",
+        data:{
+          form: false,
+          title:"",
+          salary:"",
+          company:"",
+          description:"",
+          listOfJobs:{},
+          fullList:""
+        },
+        methods: {
+          getJobs: function(){
+            
+          },
+
+          addJob: function(title, salary, company, description){
+            
+          }
+        }
+      })
+    </script>
+  </body>
+</html>
