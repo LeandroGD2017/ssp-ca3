@@ -9,7 +9,14 @@ router.get("/", function (req, res) {
 });
 
 //get all jobs
-router.get("/getjobs", function (req, res) {});
+router.get("/getjobs", function (req, res) {
+  const fs = require("fs");
+  let rawdata = fs.readFileSync("jobs.json");
+  let jobs = JSON.parse(rawdata);
+  //console.log(jobs);
+  //console.log("ACCESSED getJobs");
+  res.json(jobs);
+});
 
 //addjob
 router.get(
