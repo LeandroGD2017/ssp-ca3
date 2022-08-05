@@ -11,10 +11,6 @@
           color: rgb(0, 0, 0);
           margin-left: 4%;
         }
-        .button2 {
-          
-         
-        }
         .button1 {
           font-size: 16px;
           background-color: white;
@@ -30,17 +26,11 @@
           background-color: #f2f2f2;
           padding: 10px;
         }
-        .div2 {
-         
-        }
         .li1{
           border-color: black;
           background-color: #ffffff;
           padding: 10px;
         }
-  
-       
-  
       </style>
   </head>
   <body>
@@ -50,16 +40,17 @@
       <button class="button button1" v-on:click="getJobs(); form = false" >Get jobs</button>
       <button class="button button1" v-on:click="form = true">Add job</button><br>
 
-      <div class = "div2" v-if="form == false" v-for="data in listOfJobs">
-        <ul>
-            <li class="li1">Title: {{ data.title }} <br>
+      <div class = "div2" v-if="form == false && Object.keys(listOfJobs).length !=0" v-for="data in listOfJobs">
+          <ul>
+              <li class="li1">Title: {{ data.title }} <br>
                 Salary: €{{data.salary}} <br>
                 Company: {{data.company}} <br>
                 Description: {{data.description}} <br>
                 <button v-on:click="deleteJob(data.title,data.salary,data.company,data.description)">Delete</button>
-              </li>
-        </ul>
+            </li>
+          </ul>
       </div>
+
       <br>
       <h3 v-if="form">Add your job position here!</h3>
       <label v-if="form" for="title">Title:</label> <br>
@@ -91,6 +82,8 @@
           fullList:""
         },
         methods: {
+          //getJobs function
+          //call getjobs router to get all jobs
           getJobs: function(){
             fetch("getjobs/")
             .then((res) => res.json())
@@ -101,6 +94,11 @@
             })
           },
 
+
+          //delete function
+          //deletes a job from the json list
+          //takes title salary company and description before sending
+          //a request with the title and company parameters
           deleteJob: function(title, salary, company, description){
             fetch("title/"+title+"/company/"+company)
             .then((res) => res.json())
@@ -108,20 +106,33 @@
               console.log("TRYING TO ADD JOB");
             })
             console.log(title,salary,company,description);
+            //wait 1 second before refreshing the list on the browser
+            //if no waiting is used, the routing gets overloaded with two 
+            //requests at the same time
             setTimeout(() => this.getJobs(), 1000);
           },
 
+          //addjob function
+          //takes title, salary, company, description and sends a 
+          //request to the server to add a new job list
           addJob: function(title, salary, company, description){
-            fetch("title/"+ this.title + "/salary/" +this.salary+"/company/"+this.company+"/description/"+this.description)
-            .then((res) => res.json())
-            .then((res) => {
+            if(title.length!=0 && salary.length!=0 && company.length!=0 && description.length!=0 && isNaN(salary)==false){
+              this.title = "";
+              this.salary = "";
+              this.company = "";
+              this.description = "";
+              fetch("title/"+ title + "/salary/" +salary+"/company/"+company+"/description/"+description)
+              .then((res) => res.json())
+              .then((res) => {
               console.log("TRYING TO ADD JOB");
-
+              
             })
-            this.title = "";
-            this.salary = "";
-            this.company = "";
-            this.description = "";
+            }
+            else if(isNaN(salary)==true){
+              alert("Error! Salary must be a number");
+            }else{
+              alert("Error! Check your entries, fill in all spaces");
+            }
           }
         }
       })

@@ -1,12 +1,6 @@
 {
   "list": [
     {
-      "title": "Intership",
-      "salary": "10000",
-      "company": "Apple",
-      "description": "Very good job"
-    },
-    {
       "title": "Developer",
       "salary": "10000",
       "company": "Apple",
