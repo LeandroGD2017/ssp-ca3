@@ -56,6 +56,7 @@
                 Salary: €{{data.salary}} <br>
                 Company: {{data.company}} <br>
                 Description: {{data.description}} <br>
+                <button v-on:click="deleteJob(data.title,data.salary,data.company,data.description)">Delete</button>
               </li>
         </ul>
       </div>
@@ -98,6 +99,16 @@
               console.log(this.listOfJobs);
               form = false;
             })
+          },
+
+          deleteJob: function(title, salary, company, description){
+            fetch("title/"+title+"/company/"+company)
+            .then((res) => res.json())
+            .then((res) => {
+              console.log("TRYING TO ADD JOB");
+            })
+            console.log(title,salary,company,description);
+            setTimeout(() => this.getJobs(), 1000);
           },
 
           addJob: function(title, salary, company, description){
